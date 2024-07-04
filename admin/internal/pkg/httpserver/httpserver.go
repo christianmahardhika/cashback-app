@@ -1,6 +1,7 @@
 package httpserver
 
 import (
+	"cashback-admin/internal/pkg/middleware"
 	"cashback-admin/migrations"
 
 	"gofr.dev/pkg/gofr"
@@ -8,9 +9,8 @@ import (
 
 func InitServer() *gofr.App {
 	app := gofr.New()
-	// app.UseMiddleware(middleware.CheckTenant())
+	app.UseMiddleware(middleware.ValidateJWT())
 
-	// app.EnableAPIKeyAuthWithValidator(auth.ApiKeyValidator)
 	app.Migrate(migrations.All())
 	return app
 }
